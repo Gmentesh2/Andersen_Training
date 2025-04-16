@@ -56,3 +56,23 @@
     color: tomato;
     transition: all 0.2s ease-in-out;
 }
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+.pagination button{
+    background: tomato;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 9px;
+    cursor: pointer;
+}
+.pagination button:hover{
+    background: white;
+    color: tomato;
+    transition: all 0.2s ease-in-out;
+}
