@@ -1,4 +1,4 @@
-import styles from "./Card.module.css";
+import styles from "./pok-list.module.css";
 
 const pokemonList = [
   { name: "Ditto", id: 132 },
@@ -8,7 +8,7 @@ const pokemonList = [
   { name: "Squirtle", id: 7 },
 ];
 
-const Card = () => {
+const PokemonList = () => {
   return (
     <div className={styles.container}>
       <div className={`${styles.content} container`}>
@@ -46,4 +46,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default PokemonList;

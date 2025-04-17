@@ -1,12 +1,12 @@
 import Header from "./components/header/Header"
 import "./App.css"
-import Card from "./components/card/Card"
+import PokemonList from "./components/pokemon-list/PokemonList"
 
 const App = () => {
   return (
     <>
       <Header /> 
-      <Card />
+      <PokemonList />
     </>
   )
 }
