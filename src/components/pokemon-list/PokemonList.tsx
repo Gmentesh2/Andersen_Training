@@ -75,6 +75,10 @@ const PokemonList = () => {
                 weight={pokemon.weight}
                 stats={pokemon.stats}
               />
+              <div className={styles.buttonsDiv}>
+                <button className={styles.button}>Add to favorites</button>
+                <button className={styles.button}>Comparison</button>
+              </div>
             </div>
           ))}
         </section>
