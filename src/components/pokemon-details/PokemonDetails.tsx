@@ -5,10 +5,11 @@ type PokemonDetailsProps = {
   id: number;
   height: number;
   weight: number;
-  stats: {
-    name: string;
-    value: number;
-  }[];
+  stats: PokemonStats[];
+};
+type PokemonStats = {
+  name: string;
+  value: number;
 };
 
 const PokemonDetails = ({
