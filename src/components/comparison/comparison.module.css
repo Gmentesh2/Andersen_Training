@@ -1,0 +1,42 @@
+.comparison {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.container {
+  min-height: 200px;
+}
+table {
+  margin-top: 20px;
+  width: 50%;
+  border: 1px solid tomato;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+thead {
+  background-color: tomato;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+.removeBtn {
+  background: tomato;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 10px;
+}
+.removeBtn:hover {
+  background: white;
+  color: tomato;
+}
+tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
