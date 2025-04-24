@@ -1,4 +1,4 @@
-import styles from "./favorite-pokemons.module.css"
+import styles from "./favorite-pokemons.module.css";
 const favoritePokemons = [
   {
     name: "Ditto",
@@ -36,27 +36,37 @@ const favoritePokemons = [
 ];
 
 const FavoritePokemons = () => {
-  return <div className={`container ${styles.container}`}>
-    <h1>Favorite Pokemons</h1>
-    <div className="pokemon-list">
-      {favoritePokemons.map((pokemon) => (
-        <div key={pokemon.id} className="pokemon-card">
-          <h2>{pokemon.name}</h2>
-          <p>ID: {pokemon.id}</p>
-          <p>Height: {pokemon.height}</p>
-          <p>Weight: {pokemon.weight}</p>
-          <h3>Stats:</h3>
-          <ul>
-            {pokemon.stats.map((stat) => (
-              <li key={stat.name}>
-                {stat.name}: {stat.value}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+  return (
+    <div className={`container ${styles.container}`}>
+      <h1>Favorite Pokemons</h1>
+      <div className={styles.pokemonList}>
+        {favoritePokemons.map((pokemon) => (
+          <div key={pokemon.id} className={styles.pokemonCard}>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+              alt=""
+              className={styles.image}
+            />
+            <h2>{pokemon.name}</h2>
+            <p>ID: {pokemon.id}</p>
+            <p>Height: {pokemon.height}</p>
+            <p>Weight: {pokemon.weight}</p>
+            <h3>Stats:</h3>
+            <ul>
+              {pokemon.stats.map((stat) => (
+                <li key={stat.name}>
+                  {stat.name}: {stat.value}
+                </li>
+              ))}
+            </ul>
+            <button className={styles.removeButton}>
+              Remove from Favorites
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>;
+  );
 };
 
 export default FavoritePokemons;
