@@ -43,6 +43,7 @@ const Comparison = () => {
                 <td className={styles.name}>{pokemon.name}</td>
                 <td>{pokemon.height}</td>
                 <td>{pokemon.weight}</td>
+                <td><button className={styles.removeBtn}>Remove</button></td>
               </tr>
             ))}
           </tbody>
