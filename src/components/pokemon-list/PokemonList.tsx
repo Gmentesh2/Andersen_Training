@@ -1,4 +1,4 @@
-import PokemonDetails from "../pokemon-details/PokemonDetails";
+import { Link } from "react-router-dom";
 import styles from "./pok-list.module.css";
 
 const pokemonList = [
@@ -67,14 +67,16 @@ const PokemonList = () => {
         <section className={styles.cards}>
           {pokemonList.map((pokemon) => (
             <div key={pokemon.id} className={styles.card}>
-              <PokemonDetails
-                image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-                name={pokemon.name}
-                id={pokemon.id}
-                height={pokemon.height}
-                weight={pokemon.weight}
-                stats={pokemon.stats}
-              />
+              <Link className={styles.description} to={`/${pokemon.id}`}>
+                <img
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+                  alt=""
+                />
+                <h2>{pokemon.name}</h2>
+                <p>ID: {pokemon.id}</p>
+                <p>Height: {pokemon.height}</p>
+                <p>Weight: {pokemon.weight}</p>
+              </Link>
               <div className={styles.buttonsDiv}>
                 <button className={styles.button}>Add to favorites</button>
                 <button className={styles.button}>Comparison</button>
