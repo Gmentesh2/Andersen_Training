@@ -67,7 +67,10 @@ const PokemonList = () => {
         <section className={styles.cards}>
           {pokemonList.map((pokemon) => (
             <div key={pokemon.id} className={styles.card}>
-              <Link className={styles.description} to={`/${pokemon.id}`}>
+              <Link
+                className={styles.description}
+                to={`/pokemon/${pokemon.id}`}
+              >
                 <img
                   src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                   alt=""

@@ -43,7 +43,7 @@ const FavoritePokemons = () => {
       <div className={styles.pokemonList}>
         {favoritePokemons.map((pokemon) => (
           <div key={pokemon.id} className={styles.pokemonCard}>
-            <Link to={`/${pokemon.id}`} className={styles.link}>
+            <Link to={`/pokemon/${pokemon.id}`} className={styles.link}>
               <img
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                 alt=""
