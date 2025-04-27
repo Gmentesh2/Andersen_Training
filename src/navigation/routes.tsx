@@ -3,7 +3,7 @@ import Home from "../pages/home/Home";
 import MainLayout from "../layout/MainLayout";
 import FavoritesScreen from "../pages/favorites/FavoritesScreen";
 import ComparisonScreen from "../pages/comparison/ComparisonScreen";
-import SinglePokemon from "../components/signle-pokemon/SinglePokemon";
+import SinglePokemonScreen from "../pages/single-pokemon/SinglePokemonScreen";
 
 const RoutesConfig = () => {
   return (
@@ -12,7 +12,7 @@ const RoutesConfig = () => {
         <Route path="/" element={<Home />} />
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/comparison" element={<ComparisonScreen />} />
-        <Route path="/:pokemonID" element={<SinglePokemon />} />
+        <Route path="/:pokemonID" element={<SinglePokemonScreen />} />
         <Route
           path="*"
           element={

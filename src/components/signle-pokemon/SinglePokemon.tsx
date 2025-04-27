@@ -73,17 +73,15 @@ const SinglePokemon = () => {
   }
 
   return (
-    <div className={`container ${styles.container}`}>
-      <div key={pokemon.id} className={styles.singlePokemonCard}>
-        <PokemonDetails
-          image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-          name={pokemon.name}
-          id={pokemon.id}
-          height={pokemon.height}
-          weight={pokemon.weight}
-          stats={pokemon.stats}
-        />
-      </div>
+    <div key={pokemon.id} className={styles.singlePokemonCard}>
+      <PokemonDetails
+        image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+        name={pokemon.name}
+        id={pokemon.id}
+        height={pokemon.height}
+        weight={pokemon.weight}
+        stats={pokemon.stats}
+      />
     </div>
   );
 };
