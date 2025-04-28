@@ -4,7 +4,9 @@ import styles from "./header.module.css";
 const Header = () => {
   return (
     <div className={styles.header}>
-      <a className={styles.home} href="/">Pokemon</a>
+      <Link className={styles.home} to={"/"}>
+        Pokemon
+      </Link>
       <ul>
         <li>
           <Link to={"/favorites"}>Favorites</Link>
