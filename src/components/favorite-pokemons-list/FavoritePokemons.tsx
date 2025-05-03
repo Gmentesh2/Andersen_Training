@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./favorite-pokemons.module.css";
 const favoritePokemons = [
   {
@@ -42,23 +43,17 @@ const FavoritePokemons = () => {
       <div className={styles.pokemonList}>
         {favoritePokemons.map((pokemon) => (
           <div key={pokemon.id} className={styles.pokemonCard}>
-            <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-              alt=""
-              className={styles.image}
-            />
-            <h2>{pokemon.name}</h2>
-            <p>ID: {pokemon.id}</p>
-            <p>Height: {pokemon.height}</p>
-            <p>Weight: {pokemon.weight}</p>
-            <h3>Stats:</h3>
-            <ul>
-              {pokemon.stats.map((stat) => (
-                <li key={stat.name}>
-                  {stat.name}: {stat.value}
-                </li>
-              ))}
-            </ul>
+            <Link to={`/pokemon/${pokemon.id}`} className={styles.link}>
+              <img
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+                alt=""
+                className={styles.image}
+              />
+              <h2>{pokemon.name}</h2>
+              <p>ID: {pokemon.id}</p>
+              <p>Height: {pokemon.height}</p>
+              <p>Weight: {pokemon.weight}</p>
+            </Link>
             <button className={styles.removeButton}>
               Remove from Favorites
             </button>

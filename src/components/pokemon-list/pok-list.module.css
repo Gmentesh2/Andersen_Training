@@ -1,75 +1,84 @@
-.container{
-    width: 100%;
+.container {
+  width: 100%;
 }
-.content h2{
-    padding-top: 20px;
-    display: flex;
-    justify-content: center;
+.content h2 {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
 }
-.cards{
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding: 20px;
-    margin: 0 auto;
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin: 0 auto;
 }
-.card{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 2px dashed tomato;
-    border-radius: 10px;
-    padding: 10px;
-    width: 250px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 2px dashed tomato;
+  border-radius: 10px;
+  padding: 10px;
+  width: 250px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
-.card:hover{
-    background-color: tomato;
-    color: white;
+.card:hover {
+  background-color: tomato;
+  color: white;
 }
-.image{
-    max-width: 150px;
-    max-height: 120px;
+.image {
+  max-width: 150px;
+  max-height: 120px;
 }
-.buttonsDiv{
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
+.buttonsDiv {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
-.buttonsDiv button{
-    background: tomato;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 9px;
-    cursor: pointer;
+.buttonsDiv button {
+  background: tomato;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 9px;
+  cursor: pointer;
 }
-.buttonsDiv button:hover{
-    background: white;
-    color: tomato;
-    transition: all 0.2s ease-in-out;
+.buttonsDiv button:hover {
+  background: white;
+  color: tomato;
+  transition: all 0.2s ease-in-out;
 }
-.pagination{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0;
+.description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  color: black;
 }
-.pagination button{
-    background: tomato;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 9px;
-    cursor: pointer;
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
 }
-.pagination button:hover{
-    background: white;
-    color: tomato;
-    transition: all 0.2s ease-in-out;
+.pagination button {
+  background: tomato;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.pagination button:hover {
+  background: white;
+  color: tomato;
+  transition: all 0.2s ease-in-out;
 }

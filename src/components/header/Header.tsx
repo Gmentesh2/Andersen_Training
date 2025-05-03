@@ -1,15 +1,18 @@
+import { Link } from "react-router-dom";
 import styles from "./header.module.css";
 
 const Header = () => {
   return (
     <div className={styles.header}>
-      <h1>Pokemon</h1>
+      <Link className={styles.home} to={"/"}>
+        Pokemon
+      </Link>
       <ul>
         <li>
-          <button>Favorites</button>
+          <Link to={"/favorites"}>Favorites</Link>
         </li>
         <li>
-          <button>Comparison </button>
+          <Link to={"/comparison"}>Comparison </Link>
         </li>
       </ul>
     </div>
