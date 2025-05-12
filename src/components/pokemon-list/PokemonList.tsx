@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import styles from "./pok-list.module.css";
 import { fetchPokemonList } from "../../store/slices/PokemonSlice";
 import { useEffect } from "react";
@@ -9,25 +9,40 @@ const PokemonList = () => {
   const { list, pagination, loading, error } = useAppSelector(
     (state) => state.pokemon
   );
+  // Use React Router's useSearchParams to manage the page query parameter
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPage = searchParams.get("page") ?? "1";
 
   useEffect(() => {
+    // Calculate the offset based on the current page
+    const offset = (parseInt(currentPage, 10) - 1) * pagination.limit;
+
+    // Fetch Pokémon data for the current page
     dispatch(
-      fetchPokemonList("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20")
+      fetchPokemonList(
+        `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${pagination.limit}`
+      )
     );
-  }, [dispatch]);
+  }, [dispatch, currentPage, pagination.limit]);
+
+  const handlePageChange = (page: number) => {
+    // Update the page in the URL
+    setSearchParams({ page: page.toString() });
+  };
 
   // Calculate total pages
   const totalPages = Math.ceil(pagination.count / pagination.limit);
 
   const handleNextPage = () => {
     if (pagination.next) {
-      dispatch(fetchPokemonList(pagination.next));
+      handlePageChange(Number(currentPage) + 1);
     }
   };
 
   const handlePreviousPage = () => {
     if (pagination.previous) {
-      dispatch(fetchPokemonList(pagination.previous));
+      handlePageChange(Number(currentPage) - 1);
     }
   };
   if (loading) {
