@@ -1,99 +1,73 @@
 import { Link } from "react-router-dom";
 import styles from "./pok-list.module.css";
-
-const pokemonList = [
-  {
-    name: "Ditto",
-    id: 132,
-    height: 3,
-    weight: 40,
-    stats: [
-      { name: "hp", value: 48 },
-      { name: "attack", value: 48 },
-      { name: "defense", value: 48 },
-    ],
-  },
-  {
-    name: "Pikachu",
-    id: 25,
-    height: 4,
-    weight: 60,
-    stats: [
-      { name: "hp", value: 35 },
-      { name: "attack", value: 55 },
-      { name: "defense", value: 40 },
-    ],
-  },
-  {
-    name: "Charizard",
-    id: 6,
-    height: 17,
-    weight: 905,
-    stats: [
-      { name: "hp", value: 78 },
-      { name: "attack", value: 84 },
-      { name: "defense", value: 78 },
-    ],
-  },
-  {
-    name: "Bulbasaur",
-    id: 1,
-    height: 7,
-    weight: 69,
-    stats: [
-      { name: "hp", value: 45 },
-      { name: "attack", value: 49 },
-      { name: "defense", value: 49 },
-    ],
-  },
-  {
-    name: "Squirtle",
-    id: 7,
-    height: 5,
-    weight: 90,
-    stats: [
-      { name: "hp", value: 44 },
-      { name: "attack", value: 48 },
-      { name: "defense", value: 65 },
-    ],
-  },
-];
+import { fetchPokemonList } from "../../store/slices/PokemonSlice";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 
 const PokemonList = () => {
+  const dispatch = useAppDispatch();
+  const { list, pagination, loading, error } = useAppSelector(
+    (state) => state.pokemon
+  );
+
+  useEffect(() => {
+    dispatch(fetchPokemonList("https://pokeapi.co/api/v2/pokemon"));
+  }, [dispatch]);
+
+  const handleNextPage = () => {
+    if (pagination.next) {
+      dispatch(fetchPokemonList(pagination.next));
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (pagination.previous) {
+      dispatch(fetchPokemonList(pagination.previous));
+    }
+  };
+  if (loading) {
+    return <div className={styles.loading}>Loading...</div>;
+  }
+  if (error) {
+    return <div className={styles.error}>{error}</div>;
+  }
+
   return (
     <div className={styles.container}>
       <div className={`${styles.content} container`}>
         <h2>Pokemon List</h2>
         <section className={styles.cards}>
-          {pokemonList.map((pokemon) => (
-            <div key={pokemon.id} className={styles.card}>
-              <Link
-                className={styles.description}
-                to={`/pokemon/${pokemon.id}`}
-              >
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-                  alt=""
-                />
-                <h2>{pokemon.name}</h2>
-                <p>ID: {pokemon.id}</p>
-                <p>Height: {pokemon.height}</p>
-                <p>Weight: {pokemon.weight}</p>
-              </Link>
-              <div className={styles.buttonsDiv}>
-                <button className={styles.button}>Add to favorites</button>
-                <button className={styles.button}>Comparison</button>
+          {list.map((pokemon, index) => {
+            // Extract the Pokémon ID from the URL
+            const pokemonId = pokemon.url.split("/").filter(Boolean).pop();
+
+            return (
+              <div key={index} className={styles.card}>
+                <Link
+                  className={styles.description}
+                  to={`/pokemon/${pokemon.name}`}
+                >
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
+                    alt={pokemon.name}
+                  />
+                  <h2>{pokemon.name}</h2>
+                </Link>
+                <div className={styles.buttonsDiv}>
+                  <button className={styles.button}>Add to favorites</button>
+                  <button className={styles.button}>Comparison</button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </section>
         <ul className={styles.pagination}>
           <li>
-            <button>Previous page</button>
+            <button onClick={handlePreviousPage}>Previous page</button>
           </li>
-          <li>1</li>
+          <li>{pagination.page}</li>
           <li>
-            <button>Next page</button>
+            <button onClick={handleNextPage}>Next page</button>
           </li>
         </ul>
       </div>
