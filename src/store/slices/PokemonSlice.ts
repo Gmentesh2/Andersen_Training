@@ -11,6 +11,7 @@ export type Pagination = {
   limit: number;
   next: string | null;
   previous: string | null;
+  count: number;
 };
 export type PokemonState = {
   list: Pokemon[];
@@ -26,6 +27,7 @@ const initialState: PokemonState = {
     limit: 20,
     next: null,
     previous: null,
+    count: 1302,
   },
   loading: false,
   error: null,
@@ -72,12 +74,25 @@ const pokemonSlice = createSlice({
           state.list = action.payload.results;
           state.pagination.next = action.payload.next;
           state.pagination.previous = action.payload.previous;
-          state.pagination.page = state.pagination.next
-            ? state.pagination.page + 1
-            : state.pagination.page;
-          state.pagination.page = state.pagination.previous
-            ? state.pagination.page - 1
-            : state.pagination.page;
+
+          // Calculate the current page based on the "next" or "previous" URL
+          const nextOffset = action.payload.next
+            ? new URL(action.payload.next).searchParams.get("offset")
+            : null;
+          const previousOffset = action.payload.previous
+            ? new URL(action.payload.previous).searchParams.get("offset")
+            : null;
+
+          if (nextOffset) {
+            state.pagination.page = Math.floor(
+              Number(nextOffset) / state.pagination.limit
+            );
+          } else if (previousOffset) {
+            state.pagination.page =
+              Math.floor(Number(previousOffset) / state.pagination.limit) + 1;
+          } else {
+            state.pagination.page = 1; // Default to page 1 if no next or previous URL
+          }
         }
       )
       .addCase(

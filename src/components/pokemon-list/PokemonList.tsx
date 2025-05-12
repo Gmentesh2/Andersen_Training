@@ -11,8 +11,13 @@ const PokemonList = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchPokemonList("https://pokeapi.co/api/v2/pokemon"));
+    dispatch(
+      fetchPokemonList("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20")
+    );
   }, [dispatch]);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(pagination.count / pagination.limit);
 
   const handleNextPage = () => {
     if (pagination.next) {
@@ -63,11 +68,29 @@ const PokemonList = () => {
         </section>
         <ul className={styles.pagination}>
           <li>
-            <button onClick={handlePreviousPage}>Previous page</button>
+            <button
+              onClick={handlePreviousPage}
+              disabled={!pagination.previous}
+            >
+              Previous page
+            </button>
           </li>
-          <li>{pagination.page}</li>
           <li>
-            <button onClick={handleNextPage}>Next page</button>
+            {" "}
+            Page:{" "}
+            <span
+              className={`${styles.pageNumber} ${
+                pagination.page === 1 ? styles.activePage : ""
+              }`}
+            >
+              {pagination.page}
+            </span>{" "}
+            of {totalPages}
+          </li>
+          <li>
+            <button onClick={handleNextPage} disabled={!pagination.next}>
+              Next page
+            </button>
           </li>
         </ul>
       </div>
