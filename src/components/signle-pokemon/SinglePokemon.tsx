@@ -4,6 +4,7 @@ import styles from "./single-pokemon.module.css";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import { fetchSinglePokemon } from "../../store/slices/SinglePokemonSlice";
 import { useEffect } from "react";
+import { SpinnerCircular } from "spinners-react";
 
 const SinglePokemon = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,14 +29,22 @@ const SinglePokemon = () => {
 
   return (
     <div key={pokemon.id} className={styles.singlePokemonCard}>
-      <PokemonDetails
-        image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-        name={pokemon.name}
-        id={pokemon.id}
-        height={pokemon.height}
-        weight={pokemon.weight}
-        stats={pokemon.stats}
-      />
+      {loading ? (
+        <div className={styles.loading}>
+          <h1>
+            <SpinnerCircular enabled={true} size={100} color=" #FF6347" />
+          </h1>
+        </div>
+      ) : (
+        <PokemonDetails
+          image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+          name={pokemon.name}
+          id={pokemon.id}
+          height={pokemon.height}
+          weight={pokemon.weight}
+          stats={pokemon.stats}
+        />
+      )}
     </div>
   );
 };

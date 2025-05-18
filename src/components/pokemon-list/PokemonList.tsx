@@ -3,6 +3,7 @@ import styles from "./pok-list.module.css";
 import { fetchPokemonList } from "../../store/slices/PokemonSlice";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import { SpinnerCircularFixed } from "spinners-react";
 
 const PokemonList = () => {
   const dispatch = useAppDispatch();
@@ -46,7 +47,11 @@ const PokemonList = () => {
     }
   };
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styles.loading}>
+        <SpinnerCircularFixed enabled={true} size={100} color=" #FF6347" />
+      </div>
+    );
   }
   if (error) {
     return <div className={styles.error}>{error}</div>;
