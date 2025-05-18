@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type PokemonDetails = {
+export type PokemonDetailsTypes = {
+  image: string;
   name: string;
   id: number;
   height: number;
@@ -12,7 +13,7 @@ export type PokemonStats = {
   value: number;
 };
 export type SinglePokemonState = {
-  pokemon: PokemonDetails | null;
+  pokemon: PokemonDetailsTypes | null;
   loading: boolean;
   error: string | null;
 };
@@ -50,7 +51,7 @@ export const fetchSinglePokemon = createAsyncThunk(
         height: data.height,
         weight: data.weight,
         stats: stats,
-      } as PokemonDetails;
+      } as PokemonDetailsTypes;
     } catch (e) {
       throw e instanceof Error ? e.message : "An unknown error occurred";
     }
@@ -69,7 +70,7 @@ const SinglePokemonSlice = createSlice({
       })
       .addCase(
         fetchSinglePokemon.fulfilled,
-        (state, action: PayloadAction<PokemonDetails>) => {
+        (state, action: PayloadAction<PokemonDetailsTypes>) => {
           state.loading = false;
           state.pokemon = action.payload;
         }

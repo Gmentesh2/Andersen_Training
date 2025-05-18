@@ -4,7 +4,7 @@ import singlePokemonReducer from "./slices/SinglePokemonSlice";
 
 const store = configureStore({
   reducer: {
-    pokemon: pokemonReducer,
+    pokemonList: pokemonReducer,
     singlePokemon: singlePokemonReducer,
   },
 });

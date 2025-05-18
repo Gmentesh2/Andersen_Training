@@ -1,74 +1,27 @@
 import { useParams } from "react-router-dom";
 import PokemonDetails from "../pokemon-details/PokemonDetails";
 import styles from "./single-pokemon.module.css";
-
-const pokemonList = [
-  {
-    name: "Ditto",
-    id: 132,
-    height: 3,
-    weight: 40,
-    stats: [
-      { name: "hp", value: 48 },
-      { name: "attack", value: 48 },
-      { name: "defense", value: 48 },
-    ],
-  },
-  {
-    name: "Pikachu",
-    id: 25,
-    height: 4,
-    weight: 60,
-    stats: [
-      { name: "hp", value: 35 },
-      { name: "attack", value: 55 },
-      { name: "defense", value: 40 },
-    ],
-  },
-  {
-    name: "Charizard",
-    id: 6,
-    height: 17,
-    weight: 905,
-    stats: [
-      { name: "hp", value: 78 },
-      { name: "attack", value: 84 },
-      { name: "defense", value: 78 },
-    ],
-  },
-  {
-    name: "Bulbasaur",
-    id: 1,
-    height: 7,
-    weight: 69,
-    stats: [
-      { name: "hp", value: 45 },
-      { name: "attack", value: 49 },
-      { name: "defense", value: 49 },
-    ],
-  },
-  {
-    name: "Squirtle",
-    id: 7,
-    height: 5,
-    weight: 90,
-    stats: [
-      { name: "hp", value: 44 },
-      { name: "attack", value: 48 },
-      { name: "defense", value: 65 },
-    ],
-  },
-];
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import { fetchSinglePokemon } from "../../store/slices/SinglePokemonSlice";
+import { useEffect } from "react";
 
 const SinglePokemon = () => {
   const { id } = useParams<{ id: string }>();
-  const pokemon = pokemonList.find((p) => p.id.toString() === id);
 
+  const dispatch = useAppDispatch();
+  const { pokemon, loading, error } = useAppSelector(
+    (state) => state.singlePokemon
+  );
+
+  // Fetch the Pokemon data based on the ID from the URL
+  useEffect(() => {
+    dispatch(fetchSinglePokemon(Number(id)));
+  }, [dispatch, id]);
 
   if (!pokemon) {
     return (
       <div className={`container ${styles.container}`}>
-        <h1>Pokemon not found</h1>
+        <h1>{error}</h1>
       </div>
     );
   }

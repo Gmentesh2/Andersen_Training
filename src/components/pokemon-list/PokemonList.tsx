@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 const PokemonList = () => {
   const dispatch = useAppDispatch();
   const { list, pagination, loading, error } = useAppSelector(
-    (state) => state.pokemon
+    (state) => state.pokemonList
   );
   // Use React Router's useSearchParams to manage the page query parameter
   const [searchParams, setSearchParams] = useSearchParams();
@@ -65,7 +65,10 @@ const PokemonList = () => {
               <div key={index} className={styles.card}>
                 <Link
                   className={styles.description}
-                  to={`/pokemon/${pokemon.url.split("/").filter(Boolean).pop()}`}
+                  to={`/pokemon/${pokemon.url
+                    .split("/")
+                    .filter(Boolean)
+                    .pop()}`}
                 >
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
