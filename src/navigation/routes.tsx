@@ -12,7 +12,7 @@ const RoutesConfig = () => {
         <Route path="/" element={<Home />} />
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/comparison" element={<ComparisonScreen />} />
-        <Route path="/pokemon/:pokemonID" element={<SinglePokemonScreen />} />
+        <Route path="/pokemon/:id" element={<SinglePokemonScreen />} />
         <Route
           path="*"
           element={

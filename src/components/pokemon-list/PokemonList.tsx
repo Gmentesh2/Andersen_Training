@@ -65,7 +65,7 @@ const PokemonList = () => {
               <div key={index} className={styles.card}>
                 <Link
                   className={styles.description}
-                  to={`/pokemon/${pokemon.name}`}
+                  to={`/pokemon/${pokemon.url.split("/").filter(Boolean).pop()}`}
                 >
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}

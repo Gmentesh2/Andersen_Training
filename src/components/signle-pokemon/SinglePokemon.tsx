@@ -61,8 +61,9 @@ const pokemonList = [
 ];
 
 const SinglePokemon = () => {
-  const { pokemonID } = useParams<{ pokemonID: string }>();
-  const pokemon = pokemonList.find((p) => p.id.toString() === pokemonID);
+  const { id } = useParams<{ id: string }>();
+  const pokemon = pokemonList.find((p) => p.id.toString() === id);
+
 
   if (!pokemon) {
     return (
