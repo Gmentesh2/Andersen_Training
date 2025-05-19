@@ -21,7 +21,7 @@ const FavoritePokemons = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
+  if (favoritePokemons.length > 0 && loading) {
     return (
       <div className={styles.loading}>
         <SpinnerCircularFixed enabled={true} size={100} color=" #FF6347" />
