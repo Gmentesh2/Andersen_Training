@@ -82,7 +82,17 @@ const PokemonList = () => {
                   <h2>{pokemon.name}</h2>
                 </Link>
                 <div className={styles.buttonsDiv}>
-                  <button className={styles.button}>Add to favorites</button>
+                  <button className={styles.button}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 .587l3.668 7.568L24 9.748l-6 5.847 1.42 8.305L12 18.896l-7.42 5.004L6 15.595 0 9.748l8.332-1.593z" />
+                    </svg>
+                  </button>
                   <button className={styles.button}>Comparison</button>
                 </div>
               </div>
