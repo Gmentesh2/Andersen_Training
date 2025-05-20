@@ -4,12 +4,18 @@ import { fetchPokemonList } from "../../store/slices/PokemonSlice";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import { SpinnerCircularFixed } from "spinners-react";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../store/slices/FavoritePokemonSlice";
 
 const PokemonList = () => {
   const dispatch = useAppDispatch();
   const { list, pagination, loading, error } = useAppSelector(
     (state) => state.pokemonList
   );
+  const favorites = useAppSelector((state) => state.favoritePokemons.list);
+
   // Use React Router's useSearchParams to manage the page query parameter
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -56,6 +62,7 @@ const PokemonList = () => {
   if (error) {
     return <div className={styles.error}>{error}</div>;
   }
+  //
 
   return (
     <div className={styles.container}>
@@ -65,15 +72,25 @@ const PokemonList = () => {
           {list.map((pokemon, index) => {
             // Extract the Pokémon ID from the URL
             const pokemonId = pokemon.url.split("/").filter(Boolean).pop();
+            const isFavorite = favorites.some(
+              (fav) => fav.name === pokemon.name
+            );
+
+            const handleAddToFavorites = () => {
+              if (isFavorite) {
+                dispatch(removeFromFavorites(pokemon.name));
+              } else {
+                dispatch(
+                  addToFavorites({ name: pokemon.name, url: pokemon.url })
+                );
+              }
+            };
 
             return (
               <div key={index} className={styles.card}>
                 <Link
                   className={styles.description}
-                  to={`/pokemon/${pokemon.url
-                    .split("/")
-                    .filter(Boolean)
-                    .pop()}`}
+                  to={`/pokemon/${pokemonId}`}
                 >
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
@@ -82,7 +99,20 @@ const PokemonList = () => {
                   <h2>{pokemon.name}</h2>
                 </Link>
                 <div className={styles.buttonsDiv}>
-                  <button className={styles.button}>Add to favorites</button>
+                  <button
+                    onClick={handleAddToFavorites}
+                    className={styles.button}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      fill={isFavorite ? "#FFD700" : "currentColor"}
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 .587l3.668 7.568L24 9.748l-6 5.847 1.42 8.305L12 18.896l-7.42 5.004L6 15.595 0 9.748l8.332-1.593z" />
+                    </svg>
+                  </button>
                   <button className={styles.button}>Comparison</button>
                 </div>
               </div>
@@ -94,6 +124,9 @@ const PokemonList = () => {
             <button
               onClick={handlePreviousPage}
               disabled={!pagination.previous}
+              style={{
+                cursor: pagination.previous ? "pointer" : "not-allowed",
+              }}
             >
               Previous page
             </button>

@@ -1,65 +1,65 @@
 import { Link } from "react-router-dom";
 import styles from "./favorite-pokemons.module.css";
-const favoritePokemons = [
-  {
-    name: "Ditto",
-    id: 132,
-    height: 3,
-    weight: 40,
-    stats: [
-      { name: "hp", value: 48 },
-      { name: "attack", value: 48 },
-      { name: "defense", value: 48 },
-    ],
-  },
-  {
-    name: "Pikachu",
-    id: 25,
-    height: 4,
-    weight: 60,
-    stats: [
-      { name: "hp", value: 35 },
-      { name: "attack", value: 55 },
-      { name: "defense", value: 40 },
-    ],
-  },
-  {
-    name: "Charizard",
-    id: 6,
-    height: 17,
-    weight: 905,
-    stats: [
-      { name: "hp", value: 78 },
-      { name: "attack", value: 84 },
-      { name: "defense", value: 78 },
-    ],
-  },
-];
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import { removeFromFavorites } from "../../store/slices/FavoritePokemonSlice";
+import { useEffect, useState } from "react";
+import { SpinnerCircularFixed } from "spinners-react";
 
 const FavoritePokemons = () => {
-  return (
-    <div className={`container ${styles.container}`}>
-      <h1>Favorite Pokemons</h1>
-      <div className={styles.pokemonList}>
-        {favoritePokemons.map((pokemon) => (
-          <div key={pokemon.id} className={styles.pokemonCard}>
-            <Link to={`/pokemon/${pokemon.id}`} className={styles.link}>
-              <img
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-                alt=""
-                className={styles.image}
-              />
-              <h2>{pokemon.name}</h2>
-              <p>ID: {pokemon.id}</p>
-              <p>Height: {pokemon.height}</p>
-              <p>Weight: {pokemon.weight}</p>
-            </Link>
-            <button className={styles.removeButton}>
-              Remove from Favorites
-            </button>
-          </div>
-        ))}
+  const dispatch = useAppDispatch();
+  const favoritePokemons = useAppSelector(
+    (state) => state.favoritePokemons.list
+  );
+
+  // Local loading state
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading state for 500ms
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (favoritePokemons.length > 0 && loading) {
+    return (
+      <div className={styles.loading}>
+        <SpinnerCircularFixed enabled={true} size={100} color=" #FF6347" />
       </div>
+    );
+  }
+  return (
+    <div className={styles.FavoritePokemons}>
+      <main className={styles.container}>
+        <h1>Favorite Pokemons</h1>
+        <div className={styles.pokemonList}>
+          {favoritePokemons.length === 0 && (
+            <p className={styles.noFavorites}>No favorite pokemons yet!</p>
+          )}
+          {favoritePokemons.map((pokemon) => {
+            // Extract ID from the URL
+            const pokemonId = pokemon.url.split("/").filter(Boolean).pop();
+            return (
+              <div key={pokemon.name} className={styles.pokemonCard}>
+                <Link to={`/pokemon/${pokemonId}`} className={styles.link}>
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
+                    alt={pokemon.name}
+                    className={styles.image}
+                  />
+                  <h2>{pokemon.name}</h2>
+                </Link>
+                <button
+                  className={styles.removeButton}
+                  onClick={() => dispatch(removeFromFavorites(pokemon.name))}
+                >
+                  Remove from Favorites
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </main>
     </div>
   );
 };
