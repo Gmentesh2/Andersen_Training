@@ -3,11 +3,12 @@ import styles from "./pok-list.module.css";
 import { fetchPokemonList } from "../../store/slices/PokemonSlice";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import { SpinnerCircularFixed } from "spinners-react";
 
 const PokemonList = () => {
   const dispatch = useAppDispatch();
   const { list, pagination, loading, error } = useAppSelector(
-    (state) => state.pokemon
+    (state) => state.pokemonList
   );
   // Use React Router's useSearchParams to manage the page query parameter
   const [searchParams, setSearchParams] = useSearchParams();
@@ -46,7 +47,11 @@ const PokemonList = () => {
     }
   };
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styles.loading}>
+        <SpinnerCircularFixed enabled={true} size={100} color=" #FF6347" />
+      </div>
+    );
   }
   if (error) {
     return <div className={styles.error}>{error}</div>;
@@ -65,7 +70,10 @@ const PokemonList = () => {
               <div key={index} className={styles.card}>
                 <Link
                   className={styles.description}
-                  to={`/pokemon/${pokemon.name}`}
+                  to={`/pokemon/${pokemon.url
+                    .split("/")
+                    .filter(Boolean)
+                    .pop()}`}
                 >
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}

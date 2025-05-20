@@ -1,16 +1,5 @@
 import styles from "./pokemon-details.module.css";
-type PokemonDetailsProps = {
-  image: string;
-  name: string;
-  id: number;
-  height: number;
-  weight: number;
-  stats: PokemonStats[];
-};
-type PokemonStats = {
-  name: string;
-  value: number;
-};
+import { PokemonDetailsTypes } from "../../store/slices/SinglePokemonSlice";
 
 const PokemonDetails = ({
   image,
@@ -19,7 +8,7 @@ const PokemonDetails = ({
   height,
   weight,
   stats,
-}: PokemonDetailsProps) => {
+}: PokemonDetailsTypes) => {
   return (
     <div className={`${styles.pokemonDetails} container`}>
       <div className={styles.pokemonCard}>
