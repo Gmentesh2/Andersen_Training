@@ -75,6 +75,19 @@ const comparisonPokemonSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
+    addPokemonToComparison: (
+      state,
+      action: PayloadAction<ComparisonPokemonTypes>
+    ) => {
+      if (state.pokemon && state.pokemon.length >= state.limit) {
+        state.error = "You can only compare 2 Pokémon at a time.";
+      } else if (
+        state.pokemon &&
+        !state.pokemon.some((p) => p.id === action.payload.id)
+      ) {
+        state.pokemon.push(action.payload);
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -103,5 +116,6 @@ const comparisonPokemonSlice = createSlice({
   },
 });
 
-export const { removePokemon, clearError } = comparisonPokemonSlice.actions;
+export const { addPokemonToComparison, removePokemon, clearError } =
+  comparisonPokemonSlice.actions;
 export default comparisonPokemonSlice.reducer;

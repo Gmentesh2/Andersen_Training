@@ -40,3 +40,14 @@
   align-items: center;
   gap: 15px;
 }
+.comparisonButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: tomato;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+}
