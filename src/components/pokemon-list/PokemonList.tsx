@@ -136,7 +136,7 @@ const PokemonList = () => {
                         (p) => p.id === Number(pokemonId)
                       )
                         ? "#FFD700"
-                        : "currentColor",
+                        : "#000000",
                       cursor: comparison.pokemon?.some(
                         (p) => p.id === Number(pokemonId)
                       )
