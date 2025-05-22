@@ -78,18 +78,24 @@ const comparisonPokemonSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-     .addCase(fetchComparisonPokemon.pending, (state) => {
+      .addCase(fetchComparisonPokemon.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchComparisonPokemon.fulfilled, (state, action: PayloadAction<ComparisonPokemonTypes>) => {
-        state.loading = false;
-        if (state.pokemon && state.pokemon.length >= state.limit) {
-          state.error = "You can only compare 2 Pokémon at a time.";
-        } else if (state.pokemon && !state.pokemon.some(p => p.id === action.payload.id)) {
-          state.pokemon.push(action.payload);
+      .addCase(
+        fetchComparisonPokemon.fulfilled,
+        (state, action: PayloadAction<ComparisonPokemonTypes>) => {
+          state.loading = false;
+          if (state.pokemon && state.pokemon.length >= state.limit) {
+            state.error = "You can only compare 2 Pokémon at a time.";
+          } else if (
+            state.pokemon &&
+            !state.pokemon.some((p) => p.id === action.payload.id)
+          ) {
+            state.pokemon.push(action.payload);
+          }
         }
-      })
+      )
       .addCase(fetchComparisonPokemon.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? "An unknown error occurred";

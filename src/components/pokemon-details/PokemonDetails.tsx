@@ -30,6 +30,7 @@ const PokemonDetails = ({
               ))}
             </ul>
           </div>
+          <button>Comparison</button>
         </section>
       </div>
     </div>
