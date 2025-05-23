@@ -8,6 +8,10 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "../../store/slices/FavoritePokemonSlice";
+import {
+  clearError,
+  fetchComparisonPokemon,
+} from "../../store/slices/ComparisonSlice";
 
 const PokemonList = () => {
   const dispatch = useAppDispatch();
@@ -15,9 +19,17 @@ const PokemonList = () => {
     (state) => state.pokemonList
   );
   const favorites = useAppSelector((state) => state.favoritePokemons.list);
+  const comparison = useAppSelector((state) => state.comparisonPokemons);
 
   // Use React Router's useSearchParams to manage the page query parameter
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (comparison.error) {
+      alert(comparison.error);
+      dispatch(clearError());
+    }
+  }, [comparison.error, dispatch]);
 
   const currentPage = searchParams.get("page") ?? "1";
 
@@ -62,7 +74,6 @@ const PokemonList = () => {
   if (error) {
     return <div className={styles.error}>{error}</div>;
   }
-  //
 
   return (
     <div className={styles.container}>
@@ -84,6 +95,10 @@ const PokemonList = () => {
                   addToFavorites({ name: pokemon.name, url: pokemon.url })
                 );
               }
+            };
+
+            const handleAddToComparison = () => {
+              dispatch(fetchComparisonPokemon(Number(pokemonId)));
             };
 
             return (
@@ -113,7 +128,24 @@ const PokemonList = () => {
                       <path d="M12 .587l3.668 7.568L24 9.748l-6 5.847 1.42 8.305L12 18.896l-7.42 5.004L6 15.595 0 9.748l8.332-1.593z" />
                     </svg>
                   </button>
-                  <button className={styles.button}>Comparison</button>
+                  <button
+                    onClick={handleAddToComparison}
+                    className={styles.button}
+                    style={{
+                      color: comparison.pokemon?.some(
+                        (p) => p.id === Number(pokemonId)
+                      )
+                        ? "#FFD700"
+                        : "#000000",
+                      cursor: comparison.pokemon?.some(
+                        (p) => p.id === Number(pokemonId)
+                      )
+                        ? "not-allowed"
+                        : "pointer",
+                    }}
+                  >
+                    Comparison
+                  </button>
                 </div>
               </div>
             );

@@ -1,30 +1,27 @@
+import { SpinnerCircular } from "spinners-react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import { removePokemon } from "../../store/slices/ComparisonSlice";
 import styles from "./comparison.module.css";
-const comparisonData = [
-  {
-    name: "Pikachu",
-    id: 25,
-    height: 4,
-    weight: 60,
-    stats: [
-      { name: "hp", value: 35 },
-      { name: "attack", value: 55 },
-      { name: "defense", value: 40 },
-    ],
-  },
-  {
-    name: "Charizard",
-    id: 6,
-    height: 17,
-    weight: 905,
-    stats: [
-      { name: "hp", value: 78 },
-      { name: "attack", value: 84 },
-      { name: "defense", value: 78 },
-    ],
-  },
-];
 
 const Comparison = () => {
+  const comparison = useAppSelector(
+    (state) => state.comparisonPokemons.pokemon
+  );
+  const loading = useAppSelector((state) => state.comparisonPokemons.loading);
+
+  const dispatch = useAppDispatch();
+
+  if (!comparison || comparison.length === 0) {
+    return (
+      <div className={`container ${styles.noPokemon}`}>
+        <h1>No Pokemon in comparison, please add Pokemon to compare!</h1>
+      </div>
+    );
+  }
+  if (loading) {
+    return <SpinnerCircular enabled={true} size={100} color=" #FF6347" />;
+  }
+
   return (
     <div className={`container ${styles.container}`}>
       <div className={styles.comparison}>
@@ -35,17 +32,41 @@ const Comparison = () => {
               <th>Pokemon</th>
               <th>Height</th>
               <th>Weight</th>
+              <th>HP</th>
+              <th>Attack</th>
+              <th>Defense</th>
+              <th>Special-attack</th>
+              <th>Special-defense</th>
+              <th>Speed</th>
             </tr>
           </thead>
           <tbody>
-            {comparisonData.map((pokemon) => (
-              <tr key={pokemon.id}>
-                <td className={styles.name}>{pokemon.name}</td>
-                <td>{pokemon.height}</td>
-                <td>{pokemon.weight}</td>
-                <td><button className={styles.removeBtn}>Remove</button></td>
-              </tr>
-            ))}
+            {comparison?.map((pokemon) => {
+              // Helper to get stat value by name
+              const getStat = (statName: string) =>
+                pokemon.stats.find((s) => s.name === statName)?.value ?? "-";
+              return (
+                <tr className={styles.tableData} key={pokemon.id}>
+                  <td className={styles.name}>{pokemon.name}</td>
+                  <td>{pokemon.height}</td>
+                  <td>{pokemon.weight}</td>
+                  <td>{getStat("hp")}</td>
+                  <td>{getStat("attack")}</td>
+                  <td>{getStat("defense")}</td>
+                  <td>{getStat("special-attack")}</td>
+                  <td>{getStat("special-defense")}</td>
+                  <td>{getStat("speed")}</td>
+                  <td>
+                    <button
+                      className={styles.removeBtn}
+                      onClick={() => dispatch(removePokemon(pokemon.id))}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
