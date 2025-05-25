@@ -1,15 +1,15 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import pokemonReducer from "./slices/PokemonSlice";
 import singlePokemonReducer from "./slices/SinglePokemonSlice";
 import favoritePokemonReducer from "./slices/FavoritePokemonSlice";
 import comparisonPokemonReducer from "./slices/ComparisonSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import persistStore from "redux-persist/es/persistStore";
+import { pokemonApi } from "./api/pokemonApi";
 
 // Combine reducers when using Redux persist.
 const rootReducer = combineReducers({
-  pokemonList: pokemonReducer,
+  [pokemonApi.reducerPath]: pokemonApi.reducer,
   singlePokemon: singlePokemonReducer,
   favoritePokemons: favoritePokemonReducer,
   comparisonPokemons: comparisonPokemonReducer,
@@ -25,6 +25,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(pokemonApi.middleware),
 });
 
 export const persistor = persistStore(store);
