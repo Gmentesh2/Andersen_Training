@@ -13,6 +13,7 @@ import {
   fetchComparisonPokemon,
 } from "../../store/slices/ComparisonSlice";
 import { RootState } from "../../store/store";
+import { motion } from "motion/react";
 
 const PokemonList = () => {
   const dispatch = useAppDispatch();
@@ -107,7 +108,12 @@ const PokemonList = () => {
             };
 
             return (
-              <div key={index} className={styles.card}>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                key={index}
+                className={styles.card}
+              >
                 <Link
                   className={styles.description}
                   to={`/pokemon/${pokemonId}`}
@@ -152,7 +158,7 @@ const PokemonList = () => {
                     Comparison
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </section>

@@ -5,8 +5,10 @@ import { removeFromFavorites } from "../../store/slices/FavoritePokemonSlice";
 import { useEffect, useState } from "react";
 import { SpinnerCircularFixed } from "spinners-react";
 import { RootState } from "../../store/store";
+import { motion } from "motion/react";
 
 const FavoritePokemons = () => {
+
   const dispatch = useAppDispatch();
   const favoritePokemons = useAppSelector(
     (state: RootState) => state.favoritePokemons.list
@@ -29,6 +31,7 @@ const FavoritePokemons = () => {
       </div>
     );
   }
+
   return (
     <div className={styles.FavoritePokemons}>
       <main className={styles.container}>
@@ -42,8 +45,14 @@ const FavoritePokemons = () => {
             const pokemonId = pokemon.url
               ? pokemon.url.split("/").filter(Boolean).pop()
               : "";
+
             return (
-              <div key={pokemon.name} className={styles.pokemonCard}>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                key={pokemon.name}
+                className={styles.pokemonCard}
+              >
                 <Link to={`/pokemon/${pokemonId}`} className={styles.link}>
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
@@ -58,7 +67,7 @@ const FavoritePokemons = () => {
                 >
                   Remove from Favorites
                 </button>
-              </div>
+              </motion.div>
             );
           })}
         </div>

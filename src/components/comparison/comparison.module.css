@@ -5,6 +5,11 @@
   align-items: center;
   flex-direction: column;
 }
+.comparison h1 {
+  font-size: 30px;
+  color: tomato;
+  margin-top: 20px;
+}
 .container {
   min-height: 200px;
 }
