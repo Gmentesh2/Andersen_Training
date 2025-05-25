@@ -113,6 +113,7 @@ const PokemonList = () => {
                 whileTap={{ scale: 0.95 }}
                 key={index}
                 className={styles.card}
+                data-aos="zoom-in-up"
               >
                 <Link
                   className={styles.description}

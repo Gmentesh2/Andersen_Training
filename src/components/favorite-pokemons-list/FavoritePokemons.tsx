@@ -51,6 +51,7 @@ const FavoritePokemons = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 key={pokemon.name}
+                data-aos="zoom-out"
                 className={styles.pokemonCard}
               >
                 <Link to={`/pokemon/${pokemonId}`} className={styles.link}>
