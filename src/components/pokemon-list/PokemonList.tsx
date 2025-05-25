@@ -1,6 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
 import styles from "./pok-list.module.css";
-import { fetchPokemonList } from "../../store/slices/PokemonSlice";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import { SpinnerCircularFixed } from "spinners-react";
@@ -14,21 +13,49 @@ import {
 } from "../../store/slices/ComparisonSlice";
 import { RootState } from "../../store/store";
 import { motion } from "motion/react";
+import { useGetPokemonListQuery } from "../../store/api/pokemonApi";
 
 const PokemonList = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page") ?? "1");
+  const limit = 20; // Number of Pokémon per page
+  const offset = (currentPage - 1) * limit; // Calculate offset based on current page
+
+  const { data, isLoading, isFetching, error } = useGetPokemonListQuery({ offset, limit });
+
+  const totalPages = Math.ceil((data?.count ?? 0) / limit);
+
+  // Page change logic.
+  const handlePageChange = (page: number) => {
+    setSearchParams({ page: String(page) });
+  };
+
+  const hasNext = !!data?.next;
+  const hasPrevious = !!data?.previous;
+
+  const handleNextPage = () => {
+    if (hasNext) {
+      const nextPage = currentPage + 1;
+      handlePageChange(nextPage);
+    }
+  };
+  const handlePreviousPage = () => {
+    if (hasPrevious) {
+      const previousPage = currentPage - 1;
+      handlePageChange(previousPage);
+    }
+  };
+
+  //
+
   const dispatch = useAppDispatch();
-  const { list, pagination, loading, error } = useAppSelector(
-    (state: RootState) => state.pokemonList
-  );
+
   const favorites = useAppSelector(
     (state: RootState) => state.favoritePokemons.list
   );
   const comparison = useAppSelector(
     (state: RootState) => state.comparisonPokemons
   );
-
-  // Use React Router's useSearchParams to manage the page query parameter
-  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (comparison.error) {
@@ -37,40 +64,7 @@ const PokemonList = () => {
     }
   }, [comparison.error, dispatch]);
 
-  const currentPage = searchParams.get("page") ?? "1";
-
-  useEffect(() => {
-    // Calculate the offset based on the current page
-    const offset = (parseInt(currentPage, 10) - 1) * pagination.limit;
-
-    // Fetch Pokémon data for the current page
-    dispatch(
-      fetchPokemonList(
-        `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${pagination.limit}`
-      )
-    );
-  }, [dispatch, currentPage, pagination.limit]);
-
-  const handlePageChange = (page: number) => {
-    // Update the page in the URL
-    setSearchParams({ page: page.toString() });
-  };
-
-  // Calculate total pages
-  const totalPages = Math.ceil(pagination.count / pagination.limit);
-
-  const handleNextPage = () => {
-    if (pagination.next) {
-      handlePageChange(Number(currentPage) + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (pagination.previous) {
-      handlePageChange(Number(currentPage) - 1);
-    }
-  };
-  if (loading) {
+  if (isLoading || isFetching) {
     return (
       <div className={styles.loading}>
         <SpinnerCircularFixed enabled={true} size={100} color=" #FF6347" />
@@ -78,7 +72,11 @@ const PokemonList = () => {
     );
   }
   if (error) {
-    return <div className={styles.error}>{error}</div>;
+    return (
+      <div className={styles.error}>
+        <h1>Pokemon not found</h1>
+      </div>
+    );
   }
 
   return (
@@ -86,7 +84,7 @@ const PokemonList = () => {
       <div className={`${styles.content} container`}>
         <h2>Pokemon List</h2>
         <section className={styles.cards}>
-          {list.map((pokemon, index) => {
+          {data?.results?.map((pokemon, index) => {
             // Extract the Pokémon ID from the URL
             const pokemonId = pokemon.url.split("/").filter(Boolean).pop();
             const isFavorite = favorites.some(
@@ -167,9 +165,9 @@ const PokemonList = () => {
           <li>
             <button
               onClick={handlePreviousPage}
-              disabled={!pagination.previous}
+              disabled={!hasPrevious}
               style={{
-                cursor: pagination.previous ? "pointer" : "not-allowed",
+                cursor: hasPrevious ? "pointer" : "not-allowed",
               }}
             >
               Previous page
@@ -180,15 +178,15 @@ const PokemonList = () => {
             Page:{" "}
             <span
               className={`${styles.pageNumber} ${
-                pagination.page === 1 ? styles.activePage : ""
+                currentPage === 1 ? styles.activePage : ""
               }`}
             >
-              {pagination.page}
+              {currentPage}
             </span>{" "}
             of {totalPages}
           </li>
           <li>
-            <button onClick={handleNextPage} disabled={!pagination.next}>
+            <button onClick={handleNextPage} disabled={!hasNext}>
               Next page
             </button>
           </li>
