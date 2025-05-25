@@ -12,14 +12,19 @@ import {
   clearError,
   fetchComparisonPokemon,
 } from "../../store/slices/ComparisonSlice";
+import { RootState } from "../../store/store";
 
 const PokemonList = () => {
   const dispatch = useAppDispatch();
   const { list, pagination, loading, error } = useAppSelector(
-    (state) => state.pokemonList
+    (state: RootState) => state.pokemonList
   );
-  const favorites = useAppSelector((state) => state.favoritePokemons.list);
-  const comparison = useAppSelector((state) => state.comparisonPokemons);
+  const favorites = useAppSelector(
+    (state: RootState) => state.favoritePokemons.list
+  );
+  const comparison = useAppSelector(
+    (state: RootState) => state.comparisonPokemons
+  );
 
   // Use React Router's useSearchParams to manage the page query parameter
   const [searchParams, setSearchParams] = useSearchParams();

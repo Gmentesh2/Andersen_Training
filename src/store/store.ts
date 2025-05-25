@@ -9,12 +9,10 @@ import persistStore from "redux-persist/es/persistStore";
 
 // Combine reducers when using Redux persist.
 const rootReducer = combineReducers({
-  reducer: {
-    pokemonList: pokemonReducer,
-    singlePokemon: singlePokemonReducer,
-    favoritePokemons: favoritePokemonReducer,
-    comparisonPokemons: comparisonPokemonReducer,
-  },
+  pokemonList: pokemonReducer,
+  singlePokemon: singlePokemonReducer,
+  favoritePokemons: favoritePokemonReducer,
+  comparisonPokemons: comparisonPokemonReducer,
 });
 const persistConfig = {
   key: "root",

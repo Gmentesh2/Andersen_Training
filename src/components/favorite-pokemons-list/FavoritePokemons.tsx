@@ -4,11 +4,12 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import { removeFromFavorites } from "../../store/slices/FavoritePokemonSlice";
 import { useEffect, useState } from "react";
 import { SpinnerCircularFixed } from "spinners-react";
+import { RootState } from "../../store/store";
 
 const FavoritePokemons = () => {
   const dispatch = useAppDispatch();
   const favoritePokemons = useAppSelector(
-    (state) => state.favoritePokemons.list
+    (state: RootState) => state.favoritePokemons.list
   );
 
   // Local loading state
@@ -38,7 +39,9 @@ const FavoritePokemons = () => {
           )}
           {favoritePokemons.map((pokemon) => {
             // Extract ID from the URL
-            const pokemonId = pokemon.url.split("/").filter(Boolean).pop();
+            const pokemonId = pokemon.url
+              ? pokemon.url.split("/").filter(Boolean).pop()
+              : "";
             return (
               <div key={pokemon.name} className={styles.pokemonCard}>
                 <Link to={`/pokemon/${pokemonId}`} className={styles.link}>
