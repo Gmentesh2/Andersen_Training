@@ -1,5 +1,5 @@
 import styles from "./pokemon-details.module.css";
-import { PokemonDetailsTypes } from "../../store/slices/SinglePokemonSlice";
+import { PokemonDetailsTypes } from "../../store/slices/single-pokemon-slice/SinglePokemonSlice";
 import { addPokemonToComparison } from "../../store/slices/ComparisonSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 

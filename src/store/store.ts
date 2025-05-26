@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import singlePokemonReducer from "./slices/SinglePokemonSlice";
+import singlePokemonReducer from "./slices/single-pokemon-slice/SinglePokemonSlice";
 import favoritePokemonReducer from "./slices/FavoritePokemonSlice";
 import comparisonPokemonReducer from "./slices/ComparisonSlice";
 import { persistReducer } from "redux-persist";
