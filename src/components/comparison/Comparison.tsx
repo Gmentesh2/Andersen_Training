@@ -1,6 +1,6 @@
 import { SpinnerCircular } from "spinners-react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
-import { removePokemon } from "../../store/slices/ComparisonSlice";
+import { removePokemon } from "../../store/slices/comparison-slice/ComparisonSlice";
 import styles from "./comparison.module.css";
 import { RootState } from "../../store/store";
 

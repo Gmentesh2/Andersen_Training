@@ -10,7 +10,7 @@ import {
 import {
   clearError,
   fetchComparisonPokemon,
-} from "../../store/slices/ComparisonSlice";
+} from "../../store/slices/comparison-slice/ComparisonSlice";
 import { RootState } from "../../store/store";
 import { motion } from "motion/react";
 import { useGetPokemonListQuery } from "../../store/api/pokemonApi";

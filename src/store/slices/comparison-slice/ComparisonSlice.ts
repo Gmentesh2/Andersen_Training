@@ -18,7 +18,7 @@ export type ComparisonPokemonState = {
   error: string | null;
   limit: number;
 };
-const initialState: ComparisonPokemonState = {
+export const initialState: ComparisonPokemonState = {
   pokemon: [],
   loading: false,
   error: null,
