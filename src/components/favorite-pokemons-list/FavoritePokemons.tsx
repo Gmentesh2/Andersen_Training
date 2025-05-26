@@ -4,11 +4,14 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import { removeFromFavorites } from "../../store/slices/FavoritePokemonSlice";
 import { useEffect, useState } from "react";
 import { SpinnerCircularFixed } from "spinners-react";
+import { RootState } from "../../store/store";
+import { motion } from "motion/react";
 
 const FavoritePokemons = () => {
+
   const dispatch = useAppDispatch();
   const favoritePokemons = useAppSelector(
-    (state) => state.favoritePokemons.list
+    (state: RootState) => state.favoritePokemons.list
   );
 
   // Local loading state
@@ -28,6 +31,7 @@ const FavoritePokemons = () => {
       </div>
     );
   }
+
   return (
     <div className={styles.FavoritePokemons}>
       <main className={styles.container}>
@@ -38,9 +42,18 @@ const FavoritePokemons = () => {
           )}
           {favoritePokemons.map((pokemon) => {
             // Extract ID from the URL
-            const pokemonId = pokemon.url.split("/").filter(Boolean).pop();
+            const pokemonId = pokemon.url
+              ? pokemon.url.split("/").filter(Boolean).pop()
+              : "";
+
             return (
-              <div key={pokemon.name} className={styles.pokemonCard}>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                key={pokemon.name}
+                data-aos="zoom-out"
+                className={styles.pokemonCard}
+              >
                 <Link to={`/pokemon/${pokemonId}`} className={styles.link}>
                   <img
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`}
@@ -55,7 +68,7 @@ const FavoritePokemons = () => {
                 >
                   Remove from Favorites
                 </button>
-              </div>
+              </motion.div>
             );
           })}
         </div>

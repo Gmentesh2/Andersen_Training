@@ -2,12 +2,15 @@ import { SpinnerCircular } from "spinners-react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 import { removePokemon } from "../../store/slices/ComparisonSlice";
 import styles from "./comparison.module.css";
+import { RootState } from "../../store/store";
 
 const Comparison = () => {
   const comparison = useAppSelector(
-    (state) => state.comparisonPokemons.pokemon
+    (state: RootState) => state.comparisonPokemons.pokemon
   );
-  const loading = useAppSelector((state) => state.comparisonPokemons.loading);
+  const loading = useAppSelector(
+    (state: RootState) => state.comparisonPokemons.loading
+  );
 
   const dispatch = useAppDispatch();
 
@@ -38,13 +41,16 @@ const Comparison = () => {
               <th>Special-attack</th>
               <th>Special-defense</th>
               <th>Speed</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {comparison?.map((pokemon) => {
               // Helper to get stat value by name
               const getStat = (statName: string) =>
-                pokemon.stats.find((s) => s.name === statName)?.value ?? "-";
+                Array.isArray(pokemon.stats)
+                  ? pokemon.stats.find((s) => s.name === statName)?.value ?? "-"
+                  : "-";
               return (
                 <tr className={styles.tableData} key={pokemon.id}>
                   <td className={styles.name}>{pokemon.name}</td>
