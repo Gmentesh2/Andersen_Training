@@ -6,7 +6,7 @@ import { SpinnerCircularFixed } from "spinners-react";
 import {
   addToFavorites,
   removeFromFavorites,
-} from "../../store/slices/FavoritePokemonSlice";
+} from "../../store/slices/favorite-pokemon-slice/FavoritePokemonSlice";
 import {
   clearError,
   fetchComparisonPokemon,
