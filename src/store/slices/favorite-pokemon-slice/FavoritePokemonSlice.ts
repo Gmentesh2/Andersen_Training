@@ -11,7 +11,7 @@ export type FavoritePokemonState = {
   error: string | null;
 };
 
-const initialState: FavoritePokemonState = {
+export const initialState: FavoritePokemonState = {
   list: [],
   loading: false,
   error: null,

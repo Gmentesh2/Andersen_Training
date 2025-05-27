@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./favorite-pokemons.module.css";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
-import { removeFromFavorites } from "../../store/slices/FavoritePokemonSlice";
+import { removeFromFavorites } from "../../store/slices/favorite-pokemon-slice/FavoritePokemonSlice";
 import { useEffect, useState } from "react";
 import { SpinnerCircularFixed } from "spinners-react";
 import { RootState } from "../../store/store";

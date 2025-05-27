@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import PokemonDetails from "../pokemon-details/PokemonDetails";
 import styles from "./single-pokemon.module.css";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
-import { fetchSinglePokemon } from "../../store/slices/SinglePokemonSlice";
+import { fetchSinglePokemon } from "../../store/slices/single-pokemon-slice/SinglePokemonSlice";
 import { useEffect } from "react";
 import { SpinnerCircular } from "spinners-react";
 

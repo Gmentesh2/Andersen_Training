@@ -17,7 +17,7 @@ export type SinglePokemonState = {
   loading: boolean;
   error: string | null;
 };
-const initialState: SinglePokemonState = {
+export const initialState: SinglePokemonState = {
   pokemon: null,
   loading: false,
   error: null,

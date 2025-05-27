@@ -6,11 +6,11 @@ import { SpinnerCircularFixed } from "spinners-react";
 import {
   addToFavorites,
   removeFromFavorites,
-} from "../../store/slices/FavoritePokemonSlice";
+} from "../../store/slices/favorite-pokemon-slice/FavoritePokemonSlice";
 import {
   clearError,
   fetchComparisonPokemon,
-} from "../../store/slices/ComparisonSlice";
+} from "../../store/slices/comparison-slice/ComparisonSlice";
 import { RootState } from "../../store/store";
 import { motion } from "motion/react";
 import { useGetPokemonListQuery } from "../../store/api/pokemonApi";
